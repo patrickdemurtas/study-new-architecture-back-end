@@ -17,8 +17,22 @@ async function createSession({ token, userId }){
  await connectionDb.query(`INSERT INTO sessions (token, "userId") VALUES ($1,$2)`[token, userId]);
 }
 
+async function findSessionByToken(token){
+    return await connectionDb.query(`SELECT * FROM sessions WHERE token=$1`, [token]);
+    }
+    
+  
+
+
+async function findById(id){
+    return await connectionDb.query(`SELECT * FROM users WHERE id=$1`, [id])
+}
+
 export default {
     findByEmail,
     create,
     createSession,
+    findSessionByToken,
+    findById,
+
 };
