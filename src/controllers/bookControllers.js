@@ -28,7 +28,34 @@ async function findAll(req, res, next) {
 
 }
 
+async function takeBook(req, res, next) {
+  const { id } = res.locals.user;
+  const bookId = +req.params.id  // o operador "+" é o equivalente ao método Number(parâmetro)
+
+  try {
+    await bookServices.takeBook(id, bookId);
+    return res.sendStatus(201);
+  } catch (err) {
+    next(err);
+  }
+}
+
+async function findAllMyBooks(req, res, next) {
+ 
+  const { id } = res.locals.user;
+
+  try {
+    const books = await bookServices.findAllMyBooks(id);
+    return res.send({ books });
+  } catch (err) {
+    next(err);
+  }
+
+}
+
 export default {
   create,
   findAll,
+  takeBook,
+  findAllMyBooks,
 }

@@ -3,6 +3,7 @@ import userRepositories from '../repositories/userRepositories.js';
 import { v4 as uuidV4 } from 'uuid';
 import { conflictError, invalidCredentialsError, duplicatedEmailError } from '../errors/index.js';
 
+
 async function create({ name, email, password }) {
 
     const { rows: user } = await userRepositories.findByEmail(email);
@@ -27,6 +28,8 @@ async function signin({ email, password }){
     return token; 
 
 }
+
+
 
 export default {
     create,
