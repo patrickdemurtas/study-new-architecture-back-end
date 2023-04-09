@@ -1,6 +1,6 @@
 import userServices from "../services/userServices.js";
 
-async function create(req, res) {
+async function create(req, res, next) {
 
     const { name, email, password } = req.body;
 
@@ -10,19 +10,19 @@ async function create(req, res) {
         return res.sendStatus(201);
 
     } catch (err) {
-        return res.status(500).send(err.message);
+        next(err);
     }
 
 }
 
-async function signin (req, res) {
+async function signin (req, res, next) {
     const { email, password } = req.body;
 
     try {
         const token =  await userServices.signin({ email, password });
         return res.send({ token });
     } catch (err) { 
-       return res.status(500).send(err.message);
+       next(err);
     }
 
 }
